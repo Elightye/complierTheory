@@ -16,8 +16,8 @@ struct Data_Type{
 };
 enum Parameter_Type
 {
-    value=1,
-    reference
+    _value=1,
+    _reference
 }; //传值调用，引用调用
 struct Parameter{
     string name;
@@ -36,6 +36,7 @@ struct Identifier{
     string name;
     Data_Type data_type;
     Identifer_Type identifer_type;
+    int constant_value;
     vector<Parameter> parameter_list;//参数列表
     Data_Type return_value_data_type;//返回值类型
     bool is_error;//是否存在错误
