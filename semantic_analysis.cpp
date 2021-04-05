@@ -35,11 +35,10 @@ int main()
     Grammar grammar=initGrammer();
 
 	LR_PredictTable LRtable = getTable(grammar);
-    
+
+	vector<int>product_sequence(control_program(LRtable,grammar,token_sequence));
 
     init_ID_Table();
-
-	vector<int>product_sequence(control_program(LRtable,grammar));
 
     for(auto i:product_sequence)
         cout<<i<<endl;

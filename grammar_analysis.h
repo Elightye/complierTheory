@@ -132,12 +132,12 @@ typedef struct {
 	string content; //�Ǻ�����
 }token;
 
-vector<token> getToken(string path);
+vector<token> getToken();
 Grammar initGrammer();                           //�����﷨����
 fset getFIRST(Grammar grammar);                  //����FIRST��
 fset getFOLLOW(Grammar grammar, fset first);     //����FOLLOW��
 LR_PredictTable getTable(Grammar grammar);       //����LR������
-vector<int> control_program(LR_PredictTable LRtable, Grammar grammar); //���з�������
+vector<int> control_program(LR_PredictTable LRtable, Grammar grammar,vector<token>tokens); //���з�������
 
 void extend_closure(Grammar grammer, closure &c);//��ɱհ�����չ
 bool in_closure(closure c, sentence s, int pos); //�ж�һ���հ����Ƿ���������
