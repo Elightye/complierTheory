@@ -1,4 +1,5 @@
 #include "semantic_analysis.h"
+#include "grammar_analysis.h"
 Identifier search_identifier(string name){
     for (Id_Table *t=now_ID_table; t != NULL;t=t->father)
     {
@@ -28,8 +29,21 @@ void init_ID_Table(){
     location();
 }
 int main()
-{
+{	
+    vector<token>token_sequence=getToken();
+
+    Grammar grammar=initGrammer();
+
+	LR_PredictTable LRtable = getTable(grammar);
+    
+
     init_ID_Table();
+
+	vector<int>product_sequence(control_program(LRtable,grammar));
+
+    for(auto i:product_sequence)
+        cout<<i<<endl;
+    
     
     return 0;
 }
