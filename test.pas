@@ -4,7 +4,7 @@ const
 	
 var 
 	b:integer;
-	x,y,z:array [a..2,0..8] of integer;
+	x,y,z:array [1..2,0..8] of integer;
 
 function gcd(const a:integer;b:integer):real;
 begin
