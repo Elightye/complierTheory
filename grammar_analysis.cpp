@@ -804,6 +804,8 @@ void extend_closure(Grammar grammar, closure& c)         //��ɱհ����
 	return;
 }
 
+
+
 bool in_closure(closure c, sentence s, int pos) //�ж�һ���հ����Ƿ���������
 {
 	for (int i = 0; i < c.sentences.size(); i++)
@@ -825,13 +827,10 @@ bool in_closure(closure c, sentence s, int pos) //�ж�һ���հ���
 	return false;
 }
 
-vector<int> control_program(LR_PredictTable LRtable, Grammar grammar) //���з�������
-{
+vector<token> getToken(){
 	ifstream token_file;
 	string buffer;
-	vector<token> tokens; //�ʷ����������ļǺ�������
-
-	/*----------------------Ҫ�ĳɴʷ����������ļ���λ��---------------------*/
+	vector<token>tokens;
 	token_file.open("C:\\acm\\coding\\Semantic_Analysis\\lexOut.txt");
 	int n = 0;
 	token tem;
@@ -855,7 +854,12 @@ vector<int> control_program(LR_PredictTable LRtable, Grammar grammar) //���
 	tem.mark = 0;
 	tem.content = "$";
 	tokens.push_back(tem);
+	return tokens;
+}
 
+
+vector<int> control_program(LR_PredictTable LRtable, Grammar grammar,vector<token>tokens) //���з�������
+{
 	vector<int> reduces;  //����ʽ����
 	vector<int> state;    //״̬ջ
 	vector<int> symbol;   //����ջ

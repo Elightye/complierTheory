@@ -11,9 +11,9 @@ using namespace std;
 
 enum mark
 {
-	/*ÖÕ½á·û*/
-	EOF_, //ÎÄ±¾½áÊø
-	null_,//¿Õ
+	/*ï¿½Õ½ï¿½ï¿½*/
+	EOF_, //ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½
+	null_,//ï¿½ï¿½
 	program_,
 	const_,
 	var_,
@@ -38,8 +38,8 @@ enum mark
 	not_,
 	uminus_,
 	id,
-	fnum,    //ÕûÊý
-	digits,  //¸¡µãÊý
+	fnum,    //ï¿½ï¿½ï¿½ï¿½
+	digits,  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	//letter,
 	assignop,
 	punc_question, //?
@@ -53,10 +53,10 @@ enum mark
 	punc_square_left, //[
 	punc_square_right,//]
 	mulop_and,
-	mulop_div,   //Õû³ý
+	mulop_div,   //ï¿½ï¿½ï¿½ï¿½
 	mulop_mod,
 	mulop_mul,
-	mulop_divide,//¸¡µã³ý·¨
+	mulop_divide,//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	addop_or,
 	addop_add,
 	addop_sub,
@@ -67,9 +67,9 @@ enum mark
 	relop_g,     //>
 	relop_ge,    //>=
 	single_quote,//'
-	letter,      //×Ö·û³£Á¿  Èç¡®a¡¯¡®1¡¯
-	Boundary,    //---ÖÕ½á·ûÓë·ÇÖÕ½á·ûµÄ·Ö½çÏß---
-	/*·ÇÖÕ½á·û*/
+	letter,      //ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½  ï¿½ç¡®aï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½
+	Boundary,    //---ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½Ä·Ö½ï¿½ï¿½ï¿½---
+	/*ï¿½ï¿½ï¿½Õ½ï¿½ï¿½*/
 	S,
 	programstruct,
 	program_head,
@@ -110,16 +110,16 @@ enum mark
 	term,
 	factor,
 
-	//NOW //DFAÖÐµÄµã .
+	//NOW //DFAï¿½ÐµÄµï¿½ .
 };
 
-typedef vector<mark> sentence;    //Ã¿Ò»ÌõÓï·¨¹æÔò
-typedef vector<sentence> Grammar; //ËùÓÐÓï·¨
-typedef map<mark, set<mark>> fset;//´æfirst¼¯£¬follow¼¯
-typedef vector<vector<int>> LR_PredictTable;    //LRÔ¤²â·ÖÎö±í      
+typedef vector<mark> sentence;    //Ã¿Ò»ï¿½ï¿½ï¿½ï·¨ï¿½ï¿½ï¿½ï¿½
+typedef vector<sentence> Grammar; //ï¿½ï¿½ï¿½ï¿½ï¿½ï·¨
+typedef map<mark, set<mark>> fset;//ï¿½ï¿½firstï¿½ï¿½ï¿½ï¿½followï¿½ï¿½
+typedef vector<vector<int>> LR_PredictTable;    //LRÔ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½      
 typedef struct {
-	vector<sentence> sentences;   //´æ·ÅÓï¾ä
-	vector<int> point_pos;        //µãµÄÎ»ÖÃ,µãµÄÏÂÒ»¸ö·ûºÅÊÇpoint_pos´¦µÄ·ûºÅ
+	vector<sentence> sentences;   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	vector<int> point_pos;        //ï¿½ï¿½ï¿½Î»ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½point_posï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
 }closure;
 typedef struct{
 	int from;  
@@ -127,18 +127,19 @@ typedef struct{
 	int to;
 }Go;                              //go(from,by)=to
 typedef struct {
-	int mark; //¶ÔÓ¦¼ÇºÅµÄC++Ã¶¾ÙÖµ
-	int line; //ÐÐºÅ
-	string content; //¼ÇºÅÄÚÈÝ
+	int mark; //ï¿½ï¿½Ó¦ï¿½ÇºÅµï¿½C++Ã¶ï¿½ï¿½Öµ
+	int line; //ï¿½Ðºï¿½
+	string content; //ï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½
 }token;
 
-Grammar initGrammer();                           //¶ÁÈëÓï·¨¹æÔò
-fset getFIRST(Grammar grammar);                  //¼ÆËãFIRST¼¯
-fset getFOLLOW(Grammar grammar, fset first);     //¼ÆËãFOLLOW¼¯
-LR_PredictTable getTable(Grammar grammar);       //¼ÆËãLR·ÖÎö±í
-vector<int> control_program(LR_PredictTable LRtable, Grammar grammar); //½øÐÐ·ÖÎö¶¯×÷
+vector<token> getToken(string path);
+Grammar initGrammer();                           //ï¿½ï¿½ï¿½ï¿½ï¿½ï·¨ï¿½ï¿½ï¿½ï¿½
+fset getFIRST(Grammar grammar);                  //ï¿½ï¿½ï¿½ï¿½FIRSTï¿½ï¿½
+fset getFOLLOW(Grammar grammar, fset first);     //ï¿½ï¿½ï¿½ï¿½FOLLOWï¿½ï¿½
+LR_PredictTable getTable(Grammar grammar);       //ï¿½ï¿½ï¿½ï¿½LRï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+vector<int> control_program(LR_PredictTable LRtable, Grammar grammar); //ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-void extend_closure(Grammar grammer, closure &c);//Íê³É±Õ°üµÄÀ©Õ¹
-bool in_closure(closure c, sentence s, int pos); //ÅÐ¶ÏÒ»¸ö±Õ°üÀïÊÇ·ñ°üº¬¸ÃÓï¾ä
+void extend_closure(Grammar grammer, closure &c);//ï¿½ï¿½É±Õ°ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹
+bool in_closure(closure c, sentence s, int pos); //ï¿½Ð¶ï¿½Ò»ï¿½ï¿½ï¿½Õ°ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 #endif
